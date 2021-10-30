@@ -1,5 +1,5 @@
-a = [2.5, -0.5, -0.5, -0.5, 65.5, -33.5, -1.0, -0.6499999999999999, 1.5, 0.0, -3.5, 0.35, 16.0, 41.0, 49.5, -18.5, 56.5, 0.30000000000000004, -20.5, 1.5, -0.5, 130.0, -2.55, 0.5, -0.5, 41.0, -0.5, -0.5, 7.5, -11.0, -22.0, -0.5, -4.5, -0.5, 34.0, 38.5, -1.0, 0.5, -0.5, -12.0, 0.5, 1.5, 31.0]
-b = [[1.0, 0.0], [0.0, 17.0], [0.0, 1.0], [1.0, 0.0], [1.0, 0.0], [0.0, 3.0], [1.0, 0.0], [0.0, 1.0], [3.0, 0.0], [3.0, 0.0], [0.0, 4.0], [13.0, 0.0], [0.0, 2.0], [3.0, 0.0], [0.0, 1.0], [4.0, 0.0], [41.0, 0.0], [0.0, 2.0], [8.0, 0.0], [1.0, 0.0], [0.0, 3.0], [1.0, 0.0], [0.0, 3.0], [1.0, 0.0], [0.0, 1.0], [0.0, 58.0], [1.0, 0.0], [4.0, 0.0], [0.0, 2.0], [0.0, 7.0], [1.0, 0.0], [0.0, 3.0], [0.0, 1.0], [3.0, 0.0], [0.0, 12.0], [3.0, 0.0], [0.0, 1.0], [0.0, 4.0], [1.0, 0.0], [0.0, 5.0], [4.0, 0.0], [0.0, 1.0], [0.0, 1.0], [9.0, 0.0]]
+a = [2.5, -0.5, -0.5, -0.5, 65.5, -33.5, -3.5, -0.6499999999999999, 0.5, 0.0, -27.0, 0.35, 16.0, 41.0, 49.5, -18.5, 56.5, 0.30000000000000004, -20.5, 1.5, 14.0, 0.5, 8.0, 4.5, -26.0, 39.0, 1.5, 9.5, -0.5, -0.5, -0.5, -4.5, -0.5, 34.0, 38.5, -1.0, 0.5, -0.5, -12.0, 0.5, -2.1, 31.0]
+b = [[1.0, 0.0], [0.0, 17.0], [1.0, 0.0], [0.0, 1.0], [0.0, 3.0], [1.0, 0.0], [0.0, 1.0], [1.0, 0.0], [3.0, 0.0], [3.0, 0.0], [0.0, 4.0], [13.0, 0.0], [0.0, 2.0], [3.0, 0.0], [0.0, 1.0], [4.0, 0.0], [41.0, 0.0], [0.0, 2.0], [8.0, 0.0], [0.0, 5.0], [4.0, 0.0], [0.0, 4.0], [1.0, 0.0], [1.0, 0.0], [1.0, 0.0], [0.0, 7.0], [0.0, 52.0], [0.0, 6.0], [1.0, 0.0], [1.0, 0.0], [0.0, 3.0], [0.0, 1.0], [3.0, 0.0], [0.0, 12.0], [3.0, 0.0], [0.0, 1.0], [0.0, 4.0], [1.0, 0.0], [0.0, 5.0], [4.0, 0.0], [0.0, 1.0], [9.0, 0.0], [0.0, 1.0]]
 
 
 def predict_class(conditions, result):
@@ -63,76 +63,75 @@ def predict_class(conditions, result):
         if conditions[19] <= 0:
             if conditions[20] <= 0:
                 if conditions[21] <= 0:
+                    return result[19].index(max(result[19]))
+                else:  # condition is false
                     if conditions[22] <= 0:
-                        return result[19].index(max(result[19]))
+                        return result[20].index(max(result[20]))
                     else:  # condition is false
                         if conditions[23] <= 0:
-                            if conditions[24] <= 0:
-                                if conditions[25] <= 0:
-                                    return result[20].index(max(result[20]))
-                                else:  # condition is false
-                                    if conditions[26] <= 0:
-                                        return result[21].index(max(result[21]))
-                                    else:  # condition is false
-                                        return result[22].index(max(result[22]))
-                            else:  # condition is false
-                                return result[23].index(max(result[23]))
+                            return result[21].index(max(result[21]))
+                        else:  # condition is false
+                            return result[22].index(max(result[22]))
+            else:  # condition is false
+                if conditions[24] <= 0:
+                    if conditions[25] <= 0:
+                        if conditions[26] <= 0:
+                            return result[23].index(max(result[23]))
                         else:  # condition is false
                             if conditions[27] <= 0:
                                 return result[24].index(max(result[24]))
                             else:  # condition is false
                                 return result[25].index(max(result[25]))
-                else:  # condition is false
-                    return result[26].index(max(result[26]))
-            else:  # condition is false
-                if conditions[28] <= 0:
-                    if conditions[29] <= 0:
-                        return result[27].index(max(result[27]))
                     else:  # condition is false
-                        return result[28].index(max(result[28]))
-                else:  # condition is false
-                    if conditions[30] <= 0:
-                        return result[29].index(max(result[29]))
-                    else:  # condition is false
-                        return result[30].index(max(result[30]))
-        else:  # condition is false
-            if conditions[31] <= 0:
-                if conditions[32] <= 0:
-                    if conditions[33] <= 0:
-                        return result[31].index(max(result[31]))
-                    else:  # condition is false
-                        if conditions[34] <= 0:
-                            return result[32].index(max(result[32]))
+                        if conditions[28] <= 0:
+                            return result[26].index(max(result[26]))
                         else:  # condition is false
-                            return result[33].index(max(result[33]))
-                else:  # condition is false
-                    return result[34].index(max(result[34]))
-            else:  # condition is false
-                if conditions[35] <= 0:
-                    if conditions[36] <= 0:
-                        if conditions[37] <= 0:
-                            if conditions[38] <= 0:
-                                if conditions[39] <= 0:
-                                    return result[35].index(max(result[35]))
-                                else:  # condition is false
-                                    return result[36].index(max(result[36]))
+                            if conditions[29] <= 0:
+                                return result[27].index(max(result[27]))
                             else:  # condition is false
-                                if conditions[40] <= 0:
-                                    return result[37].index(max(result[37]))
-                                else:  # condition is false
-                                    return result[38].index(max(result[38]))
-                        else:  # condition is false
-                            return result[39].index(max(result[39]))
-                    else:  # condition is false
-                        return result[40].index(max(result[40]))
+                                return result[28].index(max(result[28]))
                 else:  # condition is false
-                    if conditions[41] <= 0:
-                        if conditions[42] <= 0:
-                            return result[41].index(max(result[41]))
-                        else:  # condition is false
-                            return result[42].index(max(result[42]))
+                    return result[29].index(max(result[29]))
+        else:  # condition is false
+            if conditions[30] <= 0:
+                if conditions[31] <= 0:
+                    if conditions[32] <= 0:
+                        return result[30].index(max(result[30]))
                     else:  # condition is false
-                        return result[43].index(max(result[43]))
+                        if conditions[33] <= 0:
+                            return result[31].index(max(result[31]))
+                        else:  # condition is false
+                            return result[32].index(max(result[32]))
+                else:  # condition is false
+                    return result[33].index(max(result[33]))
+            else:  # condition is false
+                if conditions[34] <= 0:
+                    if conditions[35] <= 0:
+                        if conditions[36] <= 0:
+                            if conditions[37] <= 0:
+                                if conditions[38] <= 0:
+                                    return result[34].index(max(result[34]))
+                                else:  # condition is false
+                                    return result[35].index(max(result[35]))
+                            else:  # condition is false
+                                if conditions[39] <= 0:
+                                    return result[36].index(max(result[36]))
+                                else:  # condition is false
+                                    return result[37].index(max(result[37]))
+                        else:  # condition is false
+                            return result[38].index(max(result[38]))
+                    else:  # condition is false
+                        return result[39].index(max(result[39]))
+                else:  # condition is false
+                    if conditions[40] <= 0:
+                        if conditions[41] <= 0:
+                            return result[40].index(max(result[40]))
+                        else:  # condition is false
+                            return result[41].index(max(result[41]))
+                    else:  # condition is false
+                        return result[42].index(max(result[42]))
+
+
 
 
 print(predict_class(a, b))
