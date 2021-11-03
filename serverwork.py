@@ -1,5 +1,8 @@
 from phe import paillier
+import json
 # accuracy 0.8852459016393442
+
+
 def predict(age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak, slope, ca, thal, public_key):
     conditions_checklist = []
     results_list = []
@@ -91,16 +94,49 @@ def predict(age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak,
     return conditions_checklist, results_list
 
 
-pub, priv = paillier.generate_paillier_keypair()
-lst = [58,0,3,150,283,1,0,162,0,1,2,0,2]
-enc_lst = [pub.encrypt(x) for x in lst]
-(age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak, slope, ca, thal) = enc_lst
+# pub, priv = paillier.generate_paillier_keypair()
+# lst = [58,0,3,150,283,1,0,162,0,1,2,0,2]
+# enc_lst = [pub.encrypt(x) for x in lst]
+# (age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak, slope, ca, thal) = enc_lst
 
-a,b = predict(age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak, slope, ca, thal, public_key=pub)
+
+def get_data():
+    with open('data.json', 'r') as f:
+        dt = json.load(f)
+    data = json.loads(dt)
+    return data
+
+
+def data_work():
+    data = get_data()
+    pub_k = data['public_key']
+    public_key = paillier.PaillierPublicKey(n=int(pub_k['n']))
+    encrypted_vals = [paillier.EncryptedNumber(public_key, int(t[0]), int(t[1])) for t in data['values']]
+    (age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak, slope, ca, thal) = encrypted_vals
+    return predict(age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak, slope, ca, thal,
+                   public_key=public_key)
+
+
+def serialize_data():
+    conditions, results= data_work()
+    data = get_data()
+    pub_k = data['public_key']
+    public_key = paillier.PaillierPublicKey(n=int(pub_k['n']))
+    encrypted_data = {'public_key': {'n': public_key.n},
+                      'conditions': [(str(val.ciphertext()), val.exponent) for val in conditions], 'results': results}
+    serialized = json.dumps(encrypted_data)
+    return serialized
+
+
+if __name__ == '__main__':
+    datafile = serialize_data()
+    with open('encrypted_results.json', 'w') as enc_file:
+        json.dump(datafile, enc_file)
+# a,b = predict(age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak, slope, ca, thal, public_key=pub)
 # print(a)
-print(b)
-
-print(len(a))
-print(len(b))
-m = [priv.decrypt(x) for x in a]
-print(m)
+# print(b)
+#
+# print(len(a))
+# print(len(b))
+# m = [priv.decrypt(x) for x in a]
+# print(m)

@@ -1,7 +1,34 @@
-a = [2.5, -0.5, -0.5, -0.5, 65.5, -33.5, -3.5, -0.6499999999999999, 0.5, 0.0, -27.0, 0.35, 16.0, 41.0, 49.5, -18.5, 56.5, 0.30000000000000004, -20.5, 1.5, 14.0, 0.5, 8.0, 4.5, -26.0, 39.0, 1.5, 9.5, -0.5, -0.5, -0.5, -4.5, -0.5, 34.0, 38.5, -1.0, 0.5, -0.5, -12.0, 0.5, -2.1, 31.0]
-b = [[1.0, 0.0], [0.0, 17.0], [1.0, 0.0], [0.0, 1.0], [0.0, 3.0], [1.0, 0.0], [0.0, 1.0], [1.0, 0.0], [3.0, 0.0], [3.0, 0.0], [0.0, 4.0], [13.0, 0.0], [0.0, 2.0], [3.0, 0.0], [0.0, 1.0], [4.0, 0.0], [41.0, 0.0], [0.0, 2.0], [8.0, 0.0], [0.0, 5.0], [4.0, 0.0], [0.0, 4.0], [1.0, 0.0], [1.0, 0.0], [1.0, 0.0], [0.0, 7.0], [0.0, 52.0], [0.0, 6.0], [1.0, 0.0], [1.0, 0.0], [0.0, 3.0], [0.0, 1.0], [3.0, 0.0], [0.0, 12.0], [3.0, 0.0], [0.0, 1.0], [0.0, 4.0], [1.0, 0.0], [0.0, 5.0], [4.0, 0.0], [0.0, 1.0], [9.0, 0.0], [0.0, 1.0]]
+from phe import paillier
+import json
+from clientside_enc_dec import get_key
 
 
+# this is for loading the encrypted files
+def get_conditions():
+    with open('encrypted_results.json', 'r') as enc_file:
+        dt = json.load(enc_file)
+        conditions = json.loads(dt)
+        return conditions
+
+
+# this function will return decrypted conditions and results
+def get_lists():
+    pub, priv = get_key()
+    enc_lst = get_conditions()
+    ser_pub = paillier.PaillierPublicKey(n=int(enc_lst['public_key']['n']))
+    conditions = [paillier.EncryptedNumber(ser_pub, int(condition[0]), int(condition[1])) for condition
+                  in enc_lst['conditions']]
+    results = enc_lst['results']
+
+    # matching if the data is encrypted with correct public key
+    if pub == ser_pub:
+        dec_conditions = [priv.decrypt(condition) for condition in conditions]
+        return dec_conditions, results
+    else:
+        raise Exception("Your public key doesn't match with server\nPossible data breach!")
+
+
+# Post decryption condition tree, created another program, sent by server
 def predict_class(conditions, result):
     if conditions[0] <= 0:
         if conditions[1] <= 0:
@@ -132,6 +159,5 @@ def predict_class(conditions, result):
                         return result[42].index(max(result[42]))
 
 
-
-
-print(predict_class(a, b))
+conditions_, results_ = get_lists()
+print(predict_class(conditions_, results_))
