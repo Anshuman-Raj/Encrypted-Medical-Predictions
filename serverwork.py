@@ -94,12 +94,7 @@ def predict(age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak,
     return conditions_checklist, results_list
 
 
-# pub, priv = paillier.generate_paillier_keypair()
-# lst = [58,0,3,150,283,1,0,162,0,1,2,0,2]
-# enc_lst = [pub.encrypt(x) for x in lst]
-# (age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak, slope, ca, thal) = enc_lst
-
-
+# for loading of data
 def get_data():
     with open('data.json', 'r') as f:
         dt = json.load(f)
@@ -107,6 +102,7 @@ def get_data():
     return data
 
 
+# for creating the condition list based on tree in the server
 def data_work():
     data = get_data()
     pub_k = data['public_key']
@@ -117,6 +113,7 @@ def data_work():
                    public_key=public_key)
 
 
+# for encrypting the data sent
 def serialize_data():
     conditions, results= data_work()
     data = get_data()
@@ -132,11 +129,4 @@ if __name__ == '__main__':
     datafile = serialize_data()
     with open('encrypted_results.json', 'w') as enc_file:
         json.dump(datafile, enc_file)
-# a,b = predict(age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak, slope, ca, thal, public_key=pub)
-# print(a)
-# print(b)
-#
-# print(len(a))
-# print(len(b))
-# m = [priv.decrypt(x) for x in a]
-# print(m)
+
