@@ -1,6 +1,9 @@
 from phe import paillier
 import json
+import time
+from extract_data import download_data, upload_data, bucket
 # accuracy 0.8852459016393442
+# enc_x-enc_y
 
 
 def predict(age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak, slope, ca, thal, public_key):
@@ -96,6 +99,7 @@ def predict(age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak,
 
 # for loading of data
 def get_data():
+    download_data(bucket, "storeFiles/data.json", "data.json")
     with open('data.json', 'r') as f:
         dt = json.load(f)
     data = json.loads(dt)
@@ -126,7 +130,11 @@ def serialize_data():
 
 
 if __name__ == '__main__':
+    time1 = time.time()
     datafile = serialize_data()
     with open('encrypted_results.json', 'w') as enc_file:
         json.dump(datafile, enc_file)
+    upload_data(bucket=bucket, key="storeFiles/encrypted_results.json", filename="encrypted_results.json")
+    time2 = time.time() - time1
+    print("Uploaded Data file at", time.strftime('%H:%M:%S %Z'), "\nTotal time taken is %.2fs" %time2)
 

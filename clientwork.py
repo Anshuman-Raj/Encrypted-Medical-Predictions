@@ -1,11 +1,26 @@
 from phe import paillier
 import json
-from clientside_enc_dec import get_key
+import time
+from extract_data import download_data, bucket
+import os
+# from clientside_enc_dec import get_key
+
+
+def get_key():
+    with open('client_keys.json', 'r') as k:
+        key_hash = json.load(k)
+        pub = paillier.PaillierPublicKey(n=int(key_hash['public_key']['n']))
+        priv = paillier.PaillierPrivateKey(pub, int(key_hash['private_key']['p']),int(key_hash['private_key']['q']))
+        return pub, priv
+
 
 
 # this is for loading the encrypted files
 def get_conditions():
+
+    download_data(bucket=bucket, key="storeFiles/encrypted_results.json", filename="encrypted_results.json")
     with open('encrypted_results.json', 'r') as enc_file:
+
         dt = json.load(enc_file)
         conditions = json.loads(dt)
         return conditions
@@ -159,5 +174,16 @@ def predict_class(conditions, result):
                         return result[42].index(max(result[42]))
 
 
+time1 = time.time()
+dict = {0: "You don't have the disease, all values are under normal range", 1: "You have some type of heart problem, please meet your doctor."}
 conditions_, results_ = get_lists()
-print(predict_class(conditions_, results_))
+result=dict[predict_class(conditions_, results_)]
+print(result)
+time2 = time.time() - time1
+datafile = {'result': result}
+with open('results.json', 'w') as enc_file:
+    json.dump(datafile, enc_file)
+print("\nTotal time taken is %.2fs" % time2)
+os.remove('client_keys.json')
+os.remove('data.json')
+os.remove('encrypted_results.json')
