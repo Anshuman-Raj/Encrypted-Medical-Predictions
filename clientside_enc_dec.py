@@ -42,6 +42,7 @@ time1 = time.time()
 root = Tk()
 root.geometry('300x120')
 root.title('Uploaded Data')
+
 public_, _private = get_key()
 # vals = list(map(int, input().split()))
 vals = [float(i) for i in sys.argv[1:]]
@@ -53,9 +54,10 @@ with open('data.json', 'w') as dt:
 upload_data(bucket=bucket, key="storeFiles/data.json", filename="data.json")
 time2 = time.time() - time1
 on_screen = "Uploaded Data file at " + time.strftime('%H:%M:%S %Z') + "\nTotal time taken to upload is %.2fs" % time2
+root.eval('tk::PlaceWindow . center')
 lebel = Label(master=root, text=on_screen)
 lebel.pack()
-button = Button(master=root, command=fin, text='ok', height=3, width=8)
-button.place(x=130, y=50)
+button = Button(master=root, command=fin, text='OK', height=3, width=8)
+button.place(x=110, y=50)
 root.mainloop()
 

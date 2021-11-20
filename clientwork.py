@@ -175,7 +175,7 @@ def predict_class(conditions, result):
 
 
 time1 = time.time()
-dict = {0: "You don't have the disease, all values are under normal range", 1: "You have some type of heart problem, please meet your doctor."}
+dict = {0: "You don't have the disease, \nall values are under normal range", 1: "You have some type of heart problem, \nplease meet your doctor."}
 conditions_, results_ = get_lists()
 result=dict[predict_class(conditions_, results_)]
 print(result)
