@@ -1,6 +1,7 @@
 from phe import paillier
 import json
 import time
+import os
 from extract_data import download_data, upload_data, bucket
 # accuracy 0.8852459016393442
 # enc_x-enc_y
@@ -138,3 +139,5 @@ if __name__ == '__main__':
     time2 = time.time() - time1
     print("Uploaded Data file at", time.strftime('%H:%M:%S %Z'), "\nTotal time taken is %.2fs" %time2)
 
+os.remove('data.json')
+os.remove('encrypted_results.json')
