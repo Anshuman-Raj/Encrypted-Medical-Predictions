@@ -23,6 +23,17 @@ The whole project can be broadly divided into 3 section:
  
  So, using this method, condition are matched with the corrosponding results given by server.
  
+ Project specific details:
+ Interface: It takes the data then calls, 'clientside_enc_dec.py' to encrypt it and send it to S3 bucket. 
+            ~This project calls the server from interface but in deployment, AWS Lambda can be used with a trigger to run 'serverwork.py' Independently~
+            Then 'serverwork.py' is called to do the server-side processing and put the encrpted results in a S3 bucket
+            After this process ends, 'clientwork.py' decrypts the result and sends it to a file from where the interfave picks it up and displays it on screen.
+            Right after displaying the results all the additonal files are deleted.
+
+extract_data.py: This is an auxilary file that helps othe file to upload and download data from the s3 bucket.
+
+des_t.py: It is the decision tree which is used to create a tree and split it into two section and print out the code for those 2 sections.
+ 
  Conclusion and Future Scope:
  
  Using this method, data gets processed on a third party server and only the user who sent the data can know the result of the processed data.
