@@ -1,7 +1,7 @@
 from phe import paillier
 import json
 import time
-from extract_data import download_data, bucket
+from extract_data import download_data
 import os
 
 
@@ -18,10 +18,10 @@ def get_key():
 
 # this is for loading the encrypted files
 def get_conditions():
-    download_data(bucket=bucket, key="storeFiles/encrypted_results.json", filename="encrypted_results.json")
+    download_data(bucket='ajay-amazoncodedeploybucket', key="storeFiles/encrypted_results.json", filename="encrypted_results.json")
     with open('encrypted_results.json', 'r') as enc_file:
-        dt = json.load(enc_file)
-        conditions = json.loads(dt)
+        conditions = json.load(enc_file)
+        # conditions = json.loads(dt)
         return conditions
 
 
