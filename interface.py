@@ -12,6 +12,8 @@ x_axis_entry = {0: 75, 1: 410}
 values = []
 
 T = []
+
+
 def submit():
     for vals in entry_list:
         values.append(vals.get())
@@ -38,10 +40,11 @@ def check_result():
     result_window = Tk()
     result_window.geometry('400x100')
     result_window.title('Result')
-    os.system('cmd /c "python serverwork.py"')
-    # time.sleep(15)
+    # Server will be running on AWS Lambda
+    time.sleep(12)
     os.system('cmd /c "python clientwork.py"')
     T[0].destroy()
+
     with open('results.json', 'r') as res_file:
         mes_res = json.load(res_file)
         message = mes_res['result']
