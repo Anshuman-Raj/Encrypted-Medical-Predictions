@@ -24,7 +24,7 @@ The whole project can be broadly divided into 3 sections:
  
  Project-specific details:
  Interface: It takes the data then calls, 'clientside_enc_dec.py' to encrypt it and send it to the S3 bucket. 
-            _(This project calls the server from the interface but in deployment, AWS Lambda can be used with a trigger to run 'serverwork.py' Independently)_
+            _(This project has deployed its server on AWS Lambda but, you can run the server separately on any device)_
             Then 'serverwork.py' is called to do the server-side processing and put the encrypted results in an S3 bucket
             After this process ends, 'clientwork.py' decrypts the result and sends it to a file from where the interface picks it up and displays it on screen.
             Right after displaying the results, all the additional files are deleted.
