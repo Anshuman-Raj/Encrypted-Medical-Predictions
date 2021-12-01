@@ -37,4 +37,4 @@ des_t.py: It is the decision tree that is used to create a tree and split it int
  
  Using this method, data gets processed on a third-party server and only the user who sent the data can know the result of the processed data.
  
- This project can further be extended using different fully homomorphic schemes and can the accommodate uses of neural networks.
+ This project can further be extended using different fully homomorphic schemes and can then accommodate uses of neural networks.
